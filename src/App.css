@@ -30,6 +30,38 @@ body {
   width: 400px;
   background: rgb(0, 174, 255);
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+textarea {
+  resize: none;
+  margin: 15px auto;
+  font-size: 15px;
+}
+
+input {
+  font-size: 18px;
+}
+
+input, textarea {
+  border: rgb(196, 196, 196) 1px solid;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+button {
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+  border: 1px solid gray;
+}
+
+button:hover {
+  background: rgb(209, 209, 209);
 }
 
 .top, .left, .right, .bottom {
@@ -41,13 +73,7 @@ body {
 .right { right: 15px; }
 .bottom { bottom: 15px }
 
-input {
-  font-size: 18px;
-  border: rgb(196, 196, 196) 1px solid;
-  border-radius: 8px;
-  padding: 5px;
-  
-}
+
 
 .text-align-right { text-align: right; }
 

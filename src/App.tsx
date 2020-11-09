@@ -3,10 +3,13 @@ import './App.css'
 
 function App() {
   const borderRadiusTarget = useRef<HTMLDivElement>(null)
+  const textareaElement = useRef<HTMLTextAreaElement>(null)
+  const [copied, setCopied] = useState<boolean>(false)
   const [borderTopLeftRadius, setBorderTopLeftRadius] = useState<string>('15')
   const [borderTopRightRadius, setBorderTopRightRadius] = useState<string>('15')
   const [borderBottomLeftRadius, setBorderBottomLeftRadius] = useState<string>('15')
   const [borderBottomRightRadius, setBorderBottomRightRadius] = useState<string>('15')
+  const [css, setCss] = useState<string>('')
 
   useEffect(() => {
     borderRadiusTarget.current?.style.setProperty('border-top-left-radius', `${borderTopLeftRadius}px`)
@@ -23,7 +26,23 @@ function App() {
   useEffect(() => {
     borderRadiusTarget.current?.style.setProperty('border-bottom-right-radius', `${borderBottomRightRadius}px`)
   }, [borderBottomRightRadius])
- 
+
+  useEffect(() => {
+    const cssValue = `div { \n  border-radius: ${borderTopLeftRadius}px ${borderTopRightRadius}px ${borderBottomRightRadius}px ${borderBottomLeftRadius}px \n}`
+    setCss(cssValue)
+    setCopied(false)
+  }, [
+    borderTopLeftRadius,
+    borderTopRightRadius,
+    borderBottomLeftRadius,
+    borderBottomRightRadius
+  ])
+
+  function handleCopyToClipboardButtonClick() {
+    textareaElement.current?.select()
+    document.execCommand('copy')
+    setCopied(true)
+  }
 
   return (
     <div>
@@ -43,7 +62,10 @@ function App() {
             onChange={event => setBorderTopRightRadius(event.target.value)}/>
         </div>
         <div className="center">
-          <div ref={borderRadiusTarget} id="border-radius-target"></div>
+          <div ref={borderRadiusTarget} id="border-radius-target">
+            <textarea ref={textareaElement} readOnly cols={40} rows={5} value={css}></textarea>
+            <button onClick={handleCopyToClipboardButtonClick}>{copied ? 'Copied' : 'Copy'}</button>
+          </div>
         </div>
         <div className="bottom left">
           <input 
